@@ -23,7 +23,7 @@ import net.wimpi.telnetd.io.terminal.xterm;
 public class HelloController {
 	@Autowired
 	UserService userService;
-	@RequestMapping("")
+	@RequestMapping("login")
 	@ResponseBody
     public DataWrapper<Void> login(
     		@RequestParam(value = "userName", required = true) String userName,
