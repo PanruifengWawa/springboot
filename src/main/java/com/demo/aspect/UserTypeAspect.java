@@ -11,6 +11,9 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import com.demo.annotation.CheckUser;
@@ -23,6 +26,10 @@ import com.demo.utils.SessionManager;
 public class UserTypeAspect {
 	 ThreadLocal<Long> time = new ThreadLocal<Long>();  
 	 ThreadLocal<String> tag = new ThreadLocal<String>();   
+	 
+	 
+	 @Autowired
+	  public Environment env;
 	    
 //	 @Autowired
 //	 UserDao userDao;
@@ -45,8 +52,8 @@ public class UserTypeAspect {
 //		 System.out.println(user.getName());
 		 
 		 
-		 
-		 String token = request.getParameter("token");
+		 System.out.println(env.getProperty("server.contextPath"));
+		 String token = request.getParameter("name");
 		 User user =  SessionManager.getSession(token);
 		 if (user != null) {
 			 //可以通过检查用户类型来进行对应的操作

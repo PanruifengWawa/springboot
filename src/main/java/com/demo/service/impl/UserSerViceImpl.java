@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.hibernate.SQLQuery;
+import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class UserSerViceImpl implements UserService {
 	
 	@Autowired
     private EntityManager em;
+	
 
 	@Override
 	public DataWrapper<Void> login(String userName, String password) {
@@ -72,23 +74,25 @@ public class UserSerViceImpl implements UserService {
 	@Override
 	public Page<User> getUserList(String token) {
 		// TODO Auto-generated method stub
+		
+		
 		Sort sort = new Sort(Sort.Direction.ASC, "id");
 	    Pageable pageable = new PageRequest(0, 5, sort);
 		Page<User> page = userDao.findList(token, pageable);
 		
 		
-//		Query nativeQuery = em.createNativeQuery("select u.id as id,u.name as name,u.user_name as userName from t_user u where u.id=6");
-//		
-//		nativeQuery.unwrap(SQLQuery.class)
-//			.addScalar("id",StandardBasicTypes.LONG)
-//			.addScalar("name",StandardBasicTypes.STRING)
-//			.addScalar("userName",StandardBasicTypes.STRING)
-//			.setResultTransformer(Transformers.aliasToBean(User.class));
-//		@SuppressWarnings({ "unchecked", "unchecked" })
-//		List<User> resultList = nativeQuery.getResultList(); 
-//		for(User u : resultList) {
-//			System.out.println(u.getId() + "," + u.getName() + "," + u.getUserName());
-//		}
+		Query nativeQuery = em.createNativeQuery("select u.id as id,u.name as name,u.user_name as userName from t_user u where u.id=6");
+		
+		nativeQuery.unwrap(SQLQuery.class)
+			.addScalar("id",StandardBasicTypes.LONG)
+			.addScalar("name",StandardBasicTypes.STRING)
+			.addScalar("userName",StandardBasicTypes.STRING)
+			.setResultTransformer(Transformers.aliasToBean(User.class));
+		@SuppressWarnings({ "unchecked", "unchecked" })
+		List<User> resultList = nativeQuery.getResultList(); 
+		for(User u : resultList) {
+			System.out.println(u.getId() + "," + u.getName() + "," + u.getUserName());
+		}
 		return page;
 	}
 

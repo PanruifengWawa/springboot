@@ -16,13 +16,14 @@ import com.demo.models.User;
 import com.demo.service.UserService;
 import com.demo.utils.DataWrapper;
 
-import net.wimpi.telnetd.io.terminal.xterm;
 
 @Controller
 @RequestMapping("/api/user")
 public class HelloController {
 	@Autowired
 	UserService userService;
+	
+	
 	@RequestMapping("login")
 	@ResponseBody
     public DataWrapper<Void> login(
@@ -40,7 +41,7 @@ public class HelloController {
         return userService.getUserList(name);
     }
 	
-	@RequestMapping("/exception")
+	@RequestMapping("/exception1")
 	@ResponseBody
     public Page<User> exception(
     		@RequestParam(value = "name", required = true) String name
